@@ -1,0 +1,17 @@
+.cards-container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px black solid;
+  width: 150px;
+  height: 150px;
+}
+
+.cards-container p {
+  margin: 0;
+}
