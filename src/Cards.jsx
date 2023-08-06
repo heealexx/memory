@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Cards.css";
 
-export function Cards({data}){
+export function Cards({data, incrementScore, gameEnd}){
   const shuffledPokemon = shuffleArray(data);
   const [seen, setSeen] = useState([]);
   const [displayedPokemon, setDisplayedPokemon] = useState(choosePokemon());
@@ -13,7 +13,7 @@ export function Cards({data}){
       const pokemon = data.find(pokemon => pokemon.id == seen[i]);
       newChosen.push(pokemon);
     }
-    for(let j = newChosen.length; j < 10; j++){
+    for(let j = newChosen.length; j < 5; j++){
       newChosen.push(shuffledPokemon[j]);
     }
     console.log(newChosen);
@@ -25,7 +25,9 @@ export function Cards({data}){
     if(seen.find(id => id == pokemonId)){
       console.log("lost");
       setPlayGame(false);
+      gameEnd();
     }else{
+      incrementScore();
       const newSeen = seen;
       newSeen.push(pokemonId);
       setSeen(newSeen);
