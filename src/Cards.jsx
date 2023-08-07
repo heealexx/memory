@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import "./Cards.css";
+import pokemonCard from "./assets/pokemonBack.png";
 
 export function Cards({data, incrementScore, gameEnd}){
   const shuffledPokemon = shuffleArray(data);
   const [seen, setSeen] = useState([]);
   const [displayedPokemon, setDisplayedPokemon] = useState(choosePokemon());
   const [playGame, setPlayGame] = useState(true);
+
+  useEffect(() => {
+    if (displayedPokemon){
+      const flipCards = document.querySelectorAll(".card-inner");
+      for (let i = 0; i < flipCards.length; i++){
+        setTimeout(()=>{
+          flipCards[i].style.transform = "rotateY(180deg)";
+        }, 1000);
+      }
+    }  
+  }, [displayedPokemon]);
 
   function choosePokemon(){
     const newChosen = [];
@@ -41,8 +53,15 @@ export function Cards({data, incrementScore, gameEnd}){
       {displayedPokemon.map((pokemon)=>{
         return (
           <div key={pokemon.id} id={pokemon.id} className="card" onClick={playGame ? handleClick : undefined}>
-            <p>{pokemon.name}</p>
-            <img src={pokemon.img}></img>
+            <div className="card-inner">
+              <div className="card-front">
+                <img src={pokemonCard}></img>
+              </div>
+              <div className="card-back">
+                <p>{pokemon.name}</p>
+                <img src={pokemon.img}></img>
+              </div>
+            </div>
           </div>
         )
       })}
